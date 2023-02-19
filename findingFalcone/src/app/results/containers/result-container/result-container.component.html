@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="header item-center">
+        <h1>Finding Falcone!</h1>
+        <h2>Select planets you want to search in: </h2>
+    </div>
+    <div class="results-page item-center">
+        <app-result-page [planets]="planetsData$ | async" [vehicle]="vehicleData$ | async"></app-result-page>
+    </div>
+    <div class="footer item-center">
+        <button class="find">Find Falcone</button>
+    </div>
+</div>

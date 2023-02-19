@@ -1,0 +1,13 @@
+.result-container{
+    display: flex;
+    flex-direction: row;
+    .child{
+        flex: 1 0 21%;
+        margin: 10px;
+        height: 100px;
+    }
+    select{
+        width: 200px;
+        height: 30px;
+    }
+}
