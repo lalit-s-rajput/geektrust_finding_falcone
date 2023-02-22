@@ -1,13 +1,51 @@
-.result-container{
+.result-container {
     display: flex;
     flex-direction: row;
-    .child{
+
+    .child {
         flex: 1 0 21%;
         margin: 10px;
         height: 100px;
     }
-    select{
+
+    select,
+    input {
         width: 200px;
         height: 30px;
+        font-size: 20px;
+    }
+    .autosuggest-container{
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* align-content: center; */
+        align-items: center;
+    }
+    .auto-field {
+        width: 203px;
+            text-align: center;
+            height: 30px;
+            /* margin: 5px; */
+            border: 1px solid gray;
+            font-size: 20px;
+            padding: 2px;
+            background: green;
+            border: 1px solid black;
+            /* margin: 0px; */
+            color: white;
+            z-index: 1;
+    }
+    .isDisabled{
+        background-color: gray;
+        cursor: not-allowed;
+    }
+    .down-arrow{
+        margin-left: -30px;
+        i{
+            position: relative;
+            top: 5px;
+            cursor: pointer;
+        }
     }
 }

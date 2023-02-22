@@ -1,55 +1,49 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Planets, Vehicle } from 'src/app/core/interface/interface';
 
 @Component({
   selector: 'app-result-page',
   templateUrl: './result-page.component.html',
-  styleUrls: ['./result-page.component.scss']
+  styleUrls: ['./result-page.component.scss'],
 })
-export class ResultPageComponent implements OnInit{
-  _planets:Planets[] = [];
-  planetsLoop:Planets[] = [];
-  _vehicles:Vehicle[] = [];
+export class ResultPageComponent implements OnInit {
+  _planets: Planets[] = [];
+  planetsLoop: Planets[] = [];
+  disabledBooleanArray:number[] = [];
+  _disabledBooleanArray:number[] = [];
+  firstDestination:any = '';
+  _vehicles: Vehicle[] = [];
   finalData = [];
   selectedDestinations = [];
+  @ViewChild('firstInput',{static:false}) firstInput:ElementRef | undefined;
 
-  @Input() set planets(data:Planets[] | null){
+  @Input() set planets(data: Planets[] | null) {
     console.log(data);
-    if(data){
+    if (data) {
       this._planets = data;
-      this.planetsLoop = data;
+      // this.planetsLoop = data;
     }
   }
-  @Input() set vehicle(data:Vehicle[] | null){
+  @Input() set vehicle(data: Vehicle[] | null) {
     console.log(data);
-    if(data){
+    if (data) {
       this._vehicles = data;
     }
   }
 
-  ngOnInit(): void {
-      
-  }
+  ngOnInit(): void {}
 
-  selectFirst(target:any){
-    let value = target.value;
-    if(value){
-      this.planetsLoop = this._planets.filter((data)=>{
-        return value!==data.name;
+  selectedFromList(indexObj:any){
+    console.log(indexObj);
+    if(!this.disabledBooleanArray.length){
+      this.disabledBooleanArray.push(indexObj.currentIndex);
+    }else {
+      this.disabledBooleanArray = this.disabledBooleanArray.filter((index)=>{
+        return index!==indexObj.prevIndex;
       });
-    } else {
-      this.planetsLoop = this._planets;
+      this.disabledBooleanArray.push(indexObj.currentIndex);
     }
-  }
-
-  selectSecond(target:any){
-    let value = target.value;
-    if(value){
-      this.planetsLoop = this.planetsLoop.filter((data)=>{
-        return value!==data.name;
-      });
-    } else {
-      this.planetsLoop = this._planets;
-    }
+    console.log(this.disabledBooleanArray);
+    this._disabledBooleanArray = this.disabledBooleanArray;
   }
 }

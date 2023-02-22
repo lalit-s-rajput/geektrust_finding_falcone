@@ -1,26 +1,18 @@
 <div class="result-container">
-    <!-- <div class="first-selector child" *ngIf="_planets?.length">
-        <select name="" id="" (change)="selectFirst($event.target)">
-            <option value="">Select Planet:</option>
-            <option *ngFor="let item of _planets" value="{{item.name}}">{{item.name}}</option>
-        </select>
+    <div class="first-selector child">
+        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
+            (selected)="selectedFromList($event)"></app-single-dropdown-view>
     </div>
-    <div class="second-selector child" *ngIf="_planets?.length">
-        <select name="" id="" (change)="selectSecond($event.target)">
-            <option value="">Select Planet:</option>
-            <option *ngFor="let item of planetsLoop" value="{{item.name}}">{{item.name}}</option>
-        </select>
+    <div class="first-selector child">
+        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
+            (selected)="selectedFromList($event)"></app-single-dropdown-view>
     </div>
-    <div class="third-selector child" *ngIf="_planets?.length">
-        <select name="" id="">
-            <option value="">Select Planet:</option>
-            <option *ngFor="let item of planetsLoop" value="{{item.name}}">{{item.name}}</option>
-        </select>
+    <div class="first-selector child">
+        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
+            (selected)="selectedFromList($event)"></app-single-dropdown-view>
     </div>
-    <div class="fourth-selector child" *ngIf="_planets?.length">
-        <select name="" id="">
-            <option value="">Select Planet:</option>
-            <option *ngFor="let item of planetsLoop" value="{{item.name}}">{{item.name}}</option>
-        </select>
-    </div> -->
+    <div class="first-selector child">
+        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
+            (selected)="selectedFromList($event)"></app-single-dropdown-view>
+    </div>
 </div>
