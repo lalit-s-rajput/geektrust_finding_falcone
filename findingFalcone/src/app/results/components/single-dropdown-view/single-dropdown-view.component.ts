@@ -27,6 +27,7 @@ export class SingleDropdownViewComponent implements OnInit {
   finalData = [];
   selectedDestinations = [];
   wasInside = false;
+  isDropFieldOpen = true;
   @HostListener('click')
   clickInside() {
     console.log('inside');
@@ -37,6 +38,7 @@ export class SingleDropdownViewComponent implements OnInit {
     if (!this.wasInside) {
       console.log('outsideClicked');
       this.planetsLoop = [];
+      // this.isDropFieldOpen = false;
     }
     this.wasInside = false;
   }
@@ -71,7 +73,8 @@ export class SingleDropdownViewComponent implements OnInit {
     }
   }
   @Output() selected = new EventEmitter();
-
+  @Output() selectedVehicle = new EventEmitter();
+  constructor(){}
   ngOnInit(): void {}
   setData(target: any) {
     // console.log(data);
@@ -111,12 +114,18 @@ export class SingleDropdownViewComponent implements OnInit {
     }
     this.firstDestination = item.name;
     this.planetsLoop = [];
+    this.isDropFieldOpen = false;
   }
   openDropdownField() {
     this.planetsLoop = this._planets;
+    this.isDropFieldOpen = true;
   }
 
   disableField(index: any) {
     return this.disabledBooleanArray[index] ? 'isDisabled' : '';
+  }
+
+  selectedVehicleData(data:any){
+    this.selectedVehicle.emit(data);
   }
 }
