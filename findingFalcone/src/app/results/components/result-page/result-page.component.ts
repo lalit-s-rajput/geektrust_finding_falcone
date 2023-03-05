@@ -21,24 +21,21 @@ export class ResultPageComponent implements OnInit {
     | undefined;
 
   @Input() set planets(data: Planets[] | null) {
-    console.log(data);
     if (data) {
       this._planets = data;
       // this.planetsLoop = data;
     }
   }
   @Input() set vehicle(data: Vehicle[] | null) {
-    console.log(data);
     if (data) {
       this._vehicles = data;
-      this.resultService.vehicleObservable.next(this._vehicles);
+      this.resultService.vehicleObservable.next([...this._vehicles]);
     }
   }
   constructor(private resultService: ResultsService) {}
   ngOnInit(): void {}
 
   selectedFromList(indexObj: any) {
-    console.log(indexObj);
     if (!this.disabledBooleanArray.length) {
       this.disabledBooleanArray.push(indexObj.currentIndex);
     } else {
@@ -47,7 +44,6 @@ export class ResultPageComponent implements OnInit {
       });
       this.disabledBooleanArray.push(indexObj.currentIndex);
     }
-    console.log(this.disabledBooleanArray);
     this._disabledBooleanArray = this.disabledBooleanArray;
   }
 

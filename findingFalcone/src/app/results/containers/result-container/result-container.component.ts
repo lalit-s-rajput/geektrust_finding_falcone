@@ -9,9 +9,13 @@ import { ResultsService } from '../../services/results.service';
 export class ResultContainerComponent implements OnInit {
   planetsData$:any;
   vehicleData$:any;
+  time = 0;
   constructor(private service:ResultsService){}
   ngOnInit(): void {
       this.planetsData$ = this.service.getPlanets();
       this.vehicleData$ = this.service.getVehicles();
+      this.service.timeTakenObservable.subscribe((data)=>{
+        this.time = data;
+      });
   }
 }

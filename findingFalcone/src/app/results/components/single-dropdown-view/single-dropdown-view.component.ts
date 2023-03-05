@@ -11,6 +11,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { Planets, Vehicle } from 'src/app/core/interface/interface';
+import { ResultsService } from '../../services/results.service';
 
 @Component({
   selector: 'app-single-dropdown-view',
@@ -21,7 +22,9 @@ export class SingleDropdownViewComponent implements OnInit {
   _planets: Planets[] = [];
   planetsLoop: Planets[] = [];
   disabledBooleanArray = [false, false, false, false, false, false];
+  prevSelectedDestination: any = '';
   firstDestination: any = '';
+  prevSelectedVehicle: any = null;
   selectedIndex = undefined;
   _vehicles: Vehicle[] = [];
   finalData = [];
@@ -30,13 +33,11 @@ export class SingleDropdownViewComponent implements OnInit {
   isDropFieldOpen = true;
   @HostListener('click')
   clickInside() {
-    console.log('inside');
     this.wasInside = true;
   }
   @HostListener('document:click')
   clickOutside() {
     if (!this.wasInside) {
-      console.log('outsideClicked');
       this.planetsLoop = [];
       // this.isDropFieldOpen = false;
     }
@@ -50,14 +51,12 @@ export class SingleDropdownViewComponent implements OnInit {
     | QueryList<ElementRef>
     | undefined;
   @Input() set planets(data: Planets[] | null) {
-    console.log(data);
     if (data) {
       this._planets = data;
       // this.planetsLoop = data;
     }
   }
   @Input() set vehicle(data: Vehicle[] | null) {
-    console.log(data);
     if (data) {
       this._vehicles = data;
     }
@@ -74,10 +73,10 @@ export class SingleDropdownViewComponent implements OnInit {
   }
   @Output() selected = new EventEmitter();
   @Output() selectedVehicle = new EventEmitter();
-  constructor(){}
+  @Output() selectedDestination = new EventEmitter();
+  constructor(private service: ResultsService) {}
   ngOnInit(): void {}
   setData(target: any) {
-    // console.log(data);
     let value = target.value.toLowerCase();
     if (value) {
       this.planetsLoop = this._planets.filter((data) => {
@@ -112,9 +111,16 @@ export class SingleDropdownViewComponent implements OnInit {
       this.selectedIndex = index;
       this.disabledBooleanArray[index] = !this.disabledBooleanArray[index];
     }
-    this.firstDestination = item.name;
+    this.prevSelectedDestination = this.firstDestination
+      ? this.firstDestination.name
+      : null;
+    this.firstDestination = item;
     this.planetsLoop = [];
     this.isDropFieldOpen = false;
+    this.service.removeFromFinalData(
+      this.prevSelectedVehicle ? this.prevSelectedVehicle.currentItem.name : null,
+      this.prevSelectedDestination ? this.prevSelectedDestination : null
+    );
   }
   openDropdownField() {
     this.planetsLoop = this._planets;
@@ -125,7 +131,24 @@ export class SingleDropdownViewComponent implements OnInit {
     return this.disabledBooleanArray[index] ? 'isDisabled' : '';
   }
 
-  selectedVehicleData(data:any){
+  selectedVehicleData(data: any) {
     this.selectedVehicle.emit(data);
+    this.prevSelectedVehicle = data;
+    this.service.addToFinalData(
+      {
+        current: data.currentItem.name,
+        prev: data.previousItem
+          ? data.previousItem.name
+          : data.currentItem.name,
+      },
+      {
+        current: this.firstDestination.name,
+        prev: this.prevSelectedDestination
+          ? this.prevSelectedDestination
+          : this.firstDestination.name,
+      }
+    );
   }
+
+  addToFinalData() {}
 }
