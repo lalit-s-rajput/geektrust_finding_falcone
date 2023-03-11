@@ -6,14 +6,14 @@ import { finalState, Planets, Vehicle } from 'src/app/core/interface/interface';
   providedIn: 'root',
 })
 export class ResultsService {
-  private State:finalState = {
-    "token":'',
-    'planet_names':[],
-    "vehicle_names":[]
+  private State: finalState = {
+    token: '',
+    planet_names: [],
+    vehicle_names: [],
   };
   finalData = new BehaviorSubject(this.State);
   vehicleObservable = new BehaviorSubject<Vehicle[]>([]);
-  vehicleInitialData:any = [];
+  vehicleInitialData: any = [];
   copy = [];
   planetInitialData = new BehaviorSubject<Planets[]>([]);
   timeTakenObservable = new BehaviorSubject(0);
@@ -24,14 +24,14 @@ export class ResultsService {
   constructor(private httpService: HttpClient) {}
 
   getPlanets() {
-    this.httpService.get(this.PLANET_API).subscribe((data:any)=>{
+    this.httpService.get(this.PLANET_API).subscribe((data: any) => {
       this.planetInitialData.next(data);
     });
     return this.planetInitialData;
   }
 
   getVehicles() {
-    this.httpService.get(this.VEHICLE_API).subscribe((data:any)=>{
+    this.httpService.get(this.VEHICLE_API).subscribe((data: any) => {
       this.vehicleInitialData = JSON.parse(JSON.stringify([...data]));
       this.vehicleObservable.next([...data]);
     });
@@ -49,58 +49,92 @@ export class ResultsService {
       ) {
         vehicle.total_no -= 1;
       }
-      if(!isPrevModified && item.previousItem?.name === vehicle.name){
+      if (!isPrevModified && item.previousItem?.name === vehicle.name) {
         vehicle.total_no++;
         isPrevModified = true;
       }
     });
   }
 
-  resetVehicleData(){
-    this.vehicleObservable.next(JSON.parse(JSON.stringify([...this.vehicleInitialData])));
+  resetVehicleData() {
+    this.vehicleObservable.next(
+      JSON.parse(JSON.stringify([...this.vehicleInitialData]))
+    );
   }
 
-  timeTaken(data:any){
+  timeTaken(data: any) {}
 
-  }
-
-  addToFinalData(Vehicle: { current: any; prev: any; },Planet: { current: any; prev: any; },flag:boolean){
-    console.log('vehicle:',Vehicle);
-    console.log('planet:',Planet.current);
-    if(!this.State.planet_names.length || !this.State.vehicle_names.length){
+  addToFinalData(
+    Vehicle: { current: any; prev: any },
+    Planet: { current: any; prev: any },
+    flag: boolean
+  ) {
+    console.log('vehicle:', Vehicle);
+    console.log('planet:', Planet.current);
+    if (!this.State.planet_names.length || !this.State.vehicle_names.length) {
       this.State.planet_names.push(Planet.current);
       this.State.vehicle_names.push(Vehicle.current);
       return;
     }
-    if(flag){
+    if (flag) {
       this.State.planet_names.push(Planet.current);
       this.State.vehicle_names.push(Vehicle.current);
       return;
     }
-    if(Planet.prev!==Planet.current){
-      this.State.planet_names = this.State.planet_names.filter((names)=>{
-        return names!==Planet.prev;
-      });
-      this.State.planet_names.push(Planet.current);
+    if (Planet.prev !== Planet.current) {
+      if (this.State.planet_names.length > 1) {
+        let isFound = false;
+      let arr = [];
+      for (let i = 0; i < this.State.planet_names.length; i++) {
+        if (!isFound && this.State.planet_names[i] == Planet.prev) {
+          isFound = true;
+          continue;
+        }
+        arr.push(this.State.planet_names[i]);
+      }
+      arr.push(Planet.current);
+      this.State.planet_names = [...arr];
+      } else {
+        this.State.planet_names[0] = Planet.current;
+      }
+      // this.State.planet_names = this.State.planet_names.filter((names)=>{
+      //   return names!==Planet.prev;
+      // });
+      // this.State.planet_names.push(Planet.current);
     }
-    if(Vehicle.current && Vehicle.prev!==Vehicle.current){
-      this.State.vehicle_names = this.State.vehicle_names.filter((names)=>{
-        return names!==Vehicle.prev;
-      });
-      this.State.vehicle_names.push(Vehicle.current);
+    if (Vehicle.current && Vehicle.prev !== Vehicle.current) {
+      if (this.State.vehicle_names.length > 1) {
+        let isFound = false;
+        let arr = [];
+        for (let i = 0; i < this.State.vehicle_names.length; i++) {
+          if (!isFound && this.State.vehicle_names[i] == Vehicle.prev) {
+            isFound = true;
+            continue;
+          }
+          arr.push(this.State.vehicle_names[i]);
+        }
+        arr.push(Vehicle.current);
+        this.State.vehicle_names = [...arr];
+      } else {
+        this.State.vehicle_names[0] = Vehicle.current;
+      }
+      // this.State.vehicle_names = this.State.vehicle_names.filter((names)=>{
+      //   return names!==Vehicle.prev;
+      // });
+      // this.State.vehicle_names.push(Vehicle.current);
     }
     console.log(this.State);
   }
 
-  removeFromFinalData(vehicle:string|null,planet:string|null){
-    if(vehicle){
-      this.State.vehicle_names = this.State.vehicle_names.filter((name)=>{
-        return name!==vehicle;
+  removeFromFinalData(vehicle: string | null, planet: string | null) {
+    if (vehicle) {
+      this.State.vehicle_names = this.State.vehicle_names.filter((name) => {
+        return name !== vehicle;
       });
     }
-    if(planet){
-      this.State.planet_names = this.State.planet_names.filter((name)=>{
-        return name!==planet;
+    if (planet) {
+      this.State.planet_names = this.State.planet_names.filter((name) => {
+        return name !== planet;
       });
     }
   }

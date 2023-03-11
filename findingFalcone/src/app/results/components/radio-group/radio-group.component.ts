@@ -9,10 +9,10 @@ import { ResultsService } from '../../services/results.service';
 })
 export class RadioGroupComponent implements OnInit {
   vehicleData: Vehicle[] = [];
-  previouslySelected:Vehicle|null = null;
+  previouslySelected: Vehicle | null = null;
 
-  _selectedDestination:any = null;
-  @Input() set firstDestination(data:any){
+  _selectedDestination: any = null;
+  @Input() set firstDestination(data: any) {
     this._selectedDestination = data;
     this.vehicleData = this.vehicleData;
     // this.resultService.resetVehicleData();
@@ -22,7 +22,7 @@ export class RadioGroupComponent implements OnInit {
   ngOnInit(): void {
     this.resultService.vehicleObservable.subscribe((data) => {
       this.vehicleData = data;
-      if(this._selectedDestination){
+      if (this._selectedDestination) {
         this.removeVehicle();
       }
     });
@@ -30,15 +30,19 @@ export class RadioGroupComponent implements OnInit {
 
   itemSelected(event: any, item: Vehicle) {
     this.selectedItem.emit({
-      currentItem:item,
-      previousItem:(!this.previouslySelected)?null:this.previouslySelected
+      currentItem: item,
+      previousItem: !this.previouslySelected ? null : this.previouslySelected,
     });
     this.previouslySelected = item;
   }
 
-  removeVehicle(){
-    this.vehicleData = this.vehicleData.filter((vehicle:Vehicle)=>{
-      return vehicle.max_distance>=this._selectedDestination?.distance;
+  removeVehicle() {
+    this.vehicleData = this.vehicleData.filter((vehicle: Vehicle) => {
+      return vehicle.max_distance >= this._selectedDestination?.distance;
     });
+  }
+
+  isDisabled(item: Vehicle) {
+    return item.total_no ? false : true;
   }
 }
