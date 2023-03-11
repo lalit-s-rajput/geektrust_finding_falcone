@@ -31,6 +31,7 @@ export class SingleDropdownViewComponent implements OnInit {
   selectedDestinations = [];
   wasInside = false;
   isDropFieldOpen = true;
+  isFirstTime = true;
   @HostListener('click')
   clickInside() {
     this.wasInside = true;
@@ -117,10 +118,10 @@ export class SingleDropdownViewComponent implements OnInit {
     this.firstDestination = item;
     this.planetsLoop = [];
     this.isDropFieldOpen = false;
-    this.service.removeFromFinalData(
-      this.prevSelectedVehicle ? this.prevSelectedVehicle.currentItem.name : null,
-      this.prevSelectedDestination ? this.prevSelectedDestination : null
-    );
+    // this.service.removeFromFinalData(
+    //   this.prevSelectedVehicle ? this.prevSelectedVehicle.currentItem.name : null,
+    //   this.prevSelectedDestination ? this.prevSelectedDestination : null
+    // );
   }
   openDropdownField() {
     this.planetsLoop = this._planets;
@@ -132,8 +133,10 @@ export class SingleDropdownViewComponent implements OnInit {
   }
 
   selectedVehicleData(data: any) {
+    //console.log(this.isFirstTime);
+    data.previousItem = this.prevSelectedVehicle;
     this.selectedVehicle.emit(data);
-    this.prevSelectedVehicle = data;
+    this.prevSelectedVehicle = data.currentItem;
     this.service.addToFinalData(
       {
         current: data.currentItem.name,
@@ -146,8 +149,11 @@ export class SingleDropdownViewComponent implements OnInit {
         prev: this.prevSelectedDestination
           ? this.prevSelectedDestination
           : this.firstDestination.name,
-      }
+      },
+      this.isFirstTime
     );
+    this.isFirstTime = false;
+    //console.log(this.isFirstTime);
   }
 
   addToFinalData() {}

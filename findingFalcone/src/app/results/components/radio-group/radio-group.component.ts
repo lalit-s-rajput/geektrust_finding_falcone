@@ -15,7 +15,7 @@ export class RadioGroupComponent implements OnInit {
   @Input() set firstDestination(data:any){
     this._selectedDestination = data;
     this.vehicleData = this.vehicleData;
-    this.resultService.resetVehicleData();
+    // this.resultService.resetVehicleData();
   }
   @Output() selectedItem = new EventEmitter();
   constructor(private resultService: ResultsService) {}

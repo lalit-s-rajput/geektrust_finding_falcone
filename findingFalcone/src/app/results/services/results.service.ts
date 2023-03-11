@@ -64,10 +64,15 @@ export class ResultsService {
 
   }
 
-  addToFinalData(Vehicle: { current: any; prev: any; },Planet: { current: any; prev: any; }){
+  addToFinalData(Vehicle: { current: any; prev: any; },Planet: { current: any; prev: any; },flag:boolean){
     console.log('vehicle:',Vehicle);
     console.log('planet:',Planet.current);
     if(!this.State.planet_names.length || !this.State.vehicle_names.length){
+      this.State.planet_names.push(Planet.current);
+      this.State.vehicle_names.push(Vehicle.current);
+      return;
+    }
+    if(flag){
       this.State.planet_names.push(Planet.current);
       this.State.vehicle_names.push(Vehicle.current);
       return;
@@ -84,6 +89,7 @@ export class ResultsService {
       });
       this.State.vehicle_names.push(Vehicle.current);
     }
+    console.log(this.State);
   }
 
   removeFromFinalData(vehicle:string|null,planet:string|null){
