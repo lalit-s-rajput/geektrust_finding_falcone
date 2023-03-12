@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import * as fromContainers from '../app/results/containers/index';
 import * as fromComponents from '../app/results/components/index';
-import {allRoutes} from './routes';
+import { allRoutes } from './routes';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,9 +19,9 @@ import {allRoutes} from './routes';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot(allRoutes)
+    RouterModule.forRoot(allRoutes),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

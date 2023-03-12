@@ -8,8 +8,8 @@
     </div>
     <div class="footer item-center">
         <div>
-            <h1 style="">Time Taken: {{time}}</h1>
+            <h1>Time Taken: {{time}}</h1>
         </div>
-        <button class="find">Find Falcone</button>
+        <button (click)="findFalcon()" [disabled]="isDisabled" class="find">Find Falcone</button>
     </div>
 </div>

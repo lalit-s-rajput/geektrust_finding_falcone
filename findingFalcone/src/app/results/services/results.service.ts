@@ -17,6 +17,7 @@ export class ResultsService {
   copy = [];
   planetInitialData = new BehaviorSubject<Planets[]>([]);
   timeTakenObservable = new BehaviorSubject(0);
+  isFindDisabled = new BehaviorSubject<boolean>(true);
   private PLANET_API = 'https://findfalcone.herokuapp.com/planets';
   private VEHICLE_API = 'https://findfalcone.herokuapp.com/vehicles';
   private GET_TOKEN = 'https://findfalcone.herokuapp.com/token';
@@ -63,44 +64,57 @@ export class ResultsService {
   }
 
   timeTaken(data: any) {}
-
+  // isFindDisabled(){
+  //   return this.State.planet_names.length==4 && this.State.vehicle_names.length==4 ? true : false;
+  // }
   addToFinalData(
     Vehicle: { current: any; prev: any },
     Planet: { current: any; prev: any },
     flag: boolean
   ) {
-    console.log('vehicle:', Vehicle);
-    console.log('planet:', Planet.current);
     if (!this.State.planet_names.length || !this.State.vehicle_names.length) {
       this.State.planet_names.push(Planet.current);
       this.State.vehicle_names.push(Vehicle.current);
+      if (
+        this.State.planet_names.length == 4 &&
+        this.State.vehicle_names.length == 4
+      ) {
+        this.isFindDisabled.next(false);
+      }
+      // this.isFindDisabled =
+      //   this.State.planet_names.length == 4 &&
+      //   this.State.vehicle_names.length == 4
+      //     ? true
+      //     : false;
       return;
     }
     if (flag) {
       this.State.planet_names.push(Planet.current);
       this.State.vehicle_names.push(Vehicle.current);
+      if (
+        this.State.planet_names.length == 4 &&
+        this.State.vehicle_names.length == 4
+      ) {
+        this.isFindDisabled.next(false);
+      }
       return;
     }
     if (Planet.prev !== Planet.current) {
       if (this.State.planet_names.length > 1) {
         let isFound = false;
-      let arr = [];
-      for (let i = 0; i < this.State.planet_names.length; i++) {
-        if (!isFound && this.State.planet_names[i] == Planet.prev) {
-          isFound = true;
-          continue;
+        let arr = [];
+        for (let i = 0; i < this.State.planet_names.length; i++) {
+          if (!isFound && this.State.planet_names[i] == Planet.prev) {
+            isFound = true;
+            continue;
+          }
+          arr.push(this.State.planet_names[i]);
         }
-        arr.push(this.State.planet_names[i]);
-      }
-      arr.push(Planet.current);
-      this.State.planet_names = [...arr];
+        arr.push(Planet.current);
+        this.State.planet_names = [...arr];
       } else {
         this.State.planet_names[0] = Planet.current;
       }
-      // this.State.planet_names = this.State.planet_names.filter((names)=>{
-      //   return names!==Planet.prev;
-      // });
-      // this.State.planet_names.push(Planet.current);
     }
     if (Vehicle.current && Vehicle.prev !== Vehicle.current) {
       if (this.State.vehicle_names.length > 1) {
@@ -118,12 +132,13 @@ export class ResultsService {
       } else {
         this.State.vehicle_names[0] = Vehicle.current;
       }
-      // this.State.vehicle_names = this.State.vehicle_names.filter((names)=>{
-      //   return names!==Vehicle.prev;
-      // });
-      // this.State.vehicle_names.push(Vehicle.current);
     }
-    console.log(this.State);
+    if (
+      this.State.planet_names.length == 4 &&
+      this.State.vehicle_names.length == 4
+    ) {
+      this.isFindDisabled.next(false);
+    }
   }
 
   removeFromFinalData(vehicle: string | null, planet: string | null) {

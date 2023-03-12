@@ -32,6 +32,7 @@ export class SingleDropdownViewComponent implements OnInit {
   wasInside = false;
   isDropFieldOpen = true;
   isFirstTime = true;
+  previousTime = 0;
   @HostListener('click')
   clickInside() {
     this.wasInside = true;
@@ -133,7 +134,12 @@ export class SingleDropdownViewComponent implements OnInit {
   }
 
   selectedVehicleData(data: any) {
-    //console.log(this.isFirstTime);
+    let time =
+      this.service.timeTakenObservable.value -
+      this.previousTime +
+      this.firstDestination.distance / data.currentItem.speed;
+    this.service.timeTakenObservable.next(time);
+    this.previousTime = this.firstDestination.distance / data.currentItem.speed;
     data.previousItem = this.prevSelectedVehicle;
     this.selectedVehicle.emit(data);
     this.prevSelectedVehicle = data.currentItem;
