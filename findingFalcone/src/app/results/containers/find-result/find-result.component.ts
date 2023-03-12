@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ResultsService } from '../../services/results.service';
 
 @Component({
   selector: 'app-find-result',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./find-result.component.scss'],
 })
 export class FindResultComponent {
-  startAgain() {}
+  constructor(
+    private routerService: Router,
+    private resultService: ResultsService
+  ) {}
+  startAgain() {
+    this.routerService.navigate(['']);
+    this.resultService.resetData();
+  }
 }

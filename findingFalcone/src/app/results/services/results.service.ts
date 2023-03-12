@@ -11,10 +11,8 @@ export class ResultsService {
     planet_names: [],
     vehicle_names: [],
   };
-  finalData = new BehaviorSubject(this.State);
   vehicleObservable = new BehaviorSubject<Vehicle[]>([]);
   vehicleInitialData: any = [];
-  copy = [];
   planetInitialData = new BehaviorSubject<Planets[]>([]);
   timeTakenObservable = new BehaviorSubject(0);
   isFindDisabled = new BehaviorSubject<boolean>(true);
@@ -39,7 +37,21 @@ export class ResultsService {
     return this.vehicleObservable;
   }
 
-  findFalcon() {}
+  getToken() {
+    const headers = { Accept: 'application/json' };
+    this.httpService.post(this.GET_TOKEN, {}, { headers }).subscribe(
+      (x: any) => {
+        this.State.token = x.token;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  findFalcon() {
+    this.getToken();
+  }
 
   modifyVehicleObservable(item: any) {
     let isPrevModified = false;
@@ -63,10 +75,8 @@ export class ResultsService {
     );
   }
 
-  timeTaken(data: any) {}
-  // isFindDisabled(){
-  //   return this.State.planet_names.length==4 && this.State.vehicle_names.length==4 ? true : false;
-  // }
+  resetPlanetData() {}
+
   addToFinalData(
     Vehicle: { current: any; prev: any },
     Planet: { current: any; prev: any },
@@ -81,11 +91,6 @@ export class ResultsService {
       ) {
         this.isFindDisabled.next(false);
       }
-      // this.isFindDisabled =
-      //   this.State.planet_names.length == 4 &&
-      //   this.State.vehicle_names.length == 4
-      //     ? true
-      //     : false;
       return;
     }
     if (flag) {
@@ -152,5 +157,14 @@ export class ResultsService {
         return name !== planet;
       });
     }
+  }
+
+  resetData() {
+    this.isFindDisabled.next(true);
+    this.timeTakenObservable.next(0);
+    this.State.planet_names = [];
+    this.State.vehicle_names = [];
+    this.resetVehicleData();
+    this.resetPlanetData();
   }
 }

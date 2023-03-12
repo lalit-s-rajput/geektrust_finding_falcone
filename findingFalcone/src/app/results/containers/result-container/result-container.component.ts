@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ResultsService } from '../../services/results.service';
 
 @Component({
@@ -12,12 +12,9 @@ export class ResultContainerComponent implements OnInit {
   vehicleData$: any;
   time = 0;
   isDisabled = true;
-  constructor(
-    private service: ResultsService,
-    private routeService: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private service: ResultsService, private routeService: Router) {}
   ngOnInit(): void {
+    this.service.resetData();
     this.planetsData$ = this.service.getPlanets();
     this.vehicleData$ = this.service.getVehicles();
     this.service.timeTakenObservable.subscribe((data) => {
@@ -32,6 +29,7 @@ export class ResultContainerComponent implements OnInit {
   }
 
   findFalcon() {
-    this.routeService.navigate(['find', { relativeTo: this.route }]);
+    this.routeService.navigate(['find']);
+    this.service.findFalcon();
   }
 }
