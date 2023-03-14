@@ -29,7 +29,18 @@ export class ResultContainerComponent implements OnInit {
   }
 
   findFalcon() {
-    this.routeService.navigate(['find']);
-    this.service.findFalcon();
+    this.service.findFalcon().subscribe(
+      (data: any) => {
+        //(res:any)=>{}
+        console.log(data);
+        if (data?.status) {
+          this.service.finalData.next({ ...data });
+          this.routeService.navigate(['find']);
+        }
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 }

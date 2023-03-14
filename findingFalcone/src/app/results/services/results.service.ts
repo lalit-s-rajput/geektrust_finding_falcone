@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, mergeMap, of } from 'rxjs';
 import { finalState, Planets, Vehicle } from 'src/app/core/interface/interface';
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,7 @@ export class ResultsService {
   planetInitialData = new BehaviorSubject<Planets[]>([]);
   timeTakenObservable = new BehaviorSubject(0);
   isFindDisabled = new BehaviorSubject<boolean>(true);
+  finalData = new BehaviorSubject<{}>({});
   private PLANET_API = 'https://findfalcone.herokuapp.com/planets';
   private VEHICLE_API = 'https://findfalcone.herokuapp.com/vehicles';
   private GET_TOKEN = 'https://findfalcone.herokuapp.com/token';
@@ -37,20 +38,24 @@ export class ResultsService {
     return this.vehicleObservable;
   }
 
-  getToken() {
-    const headers = { Accept: 'application/json' };
-    this.httpService.post(this.GET_TOKEN, {}, { headers }).subscribe(
-      (x: any) => {
-        this.State.token = x.token;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
   findFalcon() {
-    this.getToken();
+    const headers = { Accept: 'application/json' };
+    return this.httpService.post(this.GET_TOKEN, {}, { headers }).pipe(
+      mergeMap((data: any) => {
+        return of(data);
+        //return this.State;
+      }),
+      mergeMap((data: any) => {
+        this.State.token = data.token;
+        let headers = {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        };
+        return this.httpService.post(this.FIND_FALCON, this.State, {
+          headers,
+        });
+      })
+    );
   }
 
   modifyVehicleObservable(item: any) {

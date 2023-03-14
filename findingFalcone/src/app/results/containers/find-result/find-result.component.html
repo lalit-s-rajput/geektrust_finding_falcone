@@ -1,13 +1,26 @@
-<div class="find-result-container">
+<div *ngIf="isFound;else notFound" class="find-result-container">
     <div class="header">
-        <h1>Finding Falcone!</h1>
+        <h1>Finding Falcon!</h1>
     </div>
     <div class="body">
-        <h2>Success! Congratulation on Finding Falcone. King Shan is mighty pleased.</h2>
-        <h2>Time Taken: 200</h2>
-        <h2>Planet found: DonLon</h2>
+        <h2>Success! Congratulation on Finding Falcon. King Shan is mighty pleased.</h2>
+        <h2>Time Taken: {{timeTaken}}</h2>
+        <h2>Planet found: {{planet_name}}</h2>
     </div>
     <div class="footer">
         <button (click)="startAgain()" class="find">Start Again</button>
     </div>
 </div>
+<ng-template #notFound>
+    <div class="find-result-container">
+        <div class="header">
+            <h1>Finding Falcon!</h1>
+        </div>
+        <div class="body">
+            <h2>Sorry,Queen Al is not found in given planet list. Please Start again!!</h2>
+        </div>
+        <div class="footer">
+            <button (click)="startAgain()" class="find">Start Again</button>
+        </div>
+    </div>
+</ng-template>
