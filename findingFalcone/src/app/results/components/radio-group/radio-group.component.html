@@ -3,7 +3,7 @@
         <div class="form-group">
             <div *ngFor="let item of vehicleData">
                 <div class="ship-info" [ngClass]="item.total_no==0?'disable-field':''">
-                    <span class="radio-btn"><input name="options" (change)="itemSelected($event,item)"
+                    <span class="radio-btn"><input [disabled]="isDisabled(item)" name="options" (change)="itemSelected($event,item)"
                             type="radio"></span><span class="ship-name">{{item.name}} ({{item.total_no}})</span>
                 </div>
             </div>

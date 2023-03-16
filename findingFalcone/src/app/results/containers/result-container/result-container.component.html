@@ -7,6 +7,9 @@
         <app-result-page [planets]="planetsData$ | async" [vehicle]="vehicleData$ | async"></app-result-page>
     </div>
     <div class="footer item-center">
-        <button class="find">Find Falcone</button>
+        <div>
+            <h1>Time Taken: {{time}}</h1>
+        </div>
+        <button (click)="findFalcon()" [disabled]="isDisabled" class="find">Find Falcone</button>
     </div>
 </div>

@@ -9,3 +9,9 @@ export interface Vehicle{
     max_distance:number,
     speed:number
 }
+
+export interface finalState {
+    token:string;
+    planet_names:string[];
+    vehicle_names:string[];
+}

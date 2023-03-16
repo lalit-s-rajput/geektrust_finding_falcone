@@ -1,17 +1,8 @@
-.container {
+.find-result-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-
-    .item-center {
-        text-align: center;
-    }
-
-    .header {}
-
-    .results-page {}
-
-    .footer {}
+    text-align: center;
+    margin: 20px;
 
     button {
         border: 1px solid black;
@@ -24,8 +15,11 @@
         cursor: pointer;
     }
 
-    button:disabled {
-        background: gray;
-        cursor: not-allowed;
+    .body {
+        margin: 20px;
+    }
+
+    .body>div {
+        margin: 10px;
     }
 }
