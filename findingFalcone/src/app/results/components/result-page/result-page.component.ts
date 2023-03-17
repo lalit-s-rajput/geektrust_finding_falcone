@@ -51,9 +51,7 @@ export class ResultPageComponent implements OnInit, AfterViewInit {
     private resultService: ResultsService,
     private changeDetector: ChangeDetectorRef
   ) {}
-  ngOnInit(): void {
-    console.log('1');
-  }
+  ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.isMobileScreen =
       this.mainDiv!.nativeElement.clientWidth <= 400 ? true : false;
