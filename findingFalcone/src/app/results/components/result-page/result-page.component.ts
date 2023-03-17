@@ -1,4 +1,13 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Planets, Vehicle } from 'src/app/core/interface/interface';
 import { ResultsService } from '../../services/results.service';
 
@@ -7,7 +16,7 @@ import { ResultsService } from '../../services/results.service';
   templateUrl: './result-page.component.html',
   styleUrls: ['./result-page.component.scss'],
 })
-export class ResultPageComponent implements OnInit {
+export class ResultPageComponent implements OnInit, AfterViewInit {
   _planets: Planets[] = [];
   planetsLoop: Planets[] = [];
   disabledBooleanArray: number[] = [];
@@ -16,6 +25,13 @@ export class ResultPageComponent implements OnInit {
   _vehicles: Vehicle[] = [];
   finalData = [];
   selectedDestinations = [];
+  isMobileScreen = false;
+  @ViewChild('mainDiv') mainDiv?: ElementRef<HTMLElement>;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobileScreen =
+      this.mainDiv!.nativeElement.clientWidth <= 400 ? true : false;
+  }
   @ViewChild('firstInput', { static: false }) firstInput:
     | ElementRef
     | undefined;
@@ -23,7 +39,6 @@ export class ResultPageComponent implements OnInit {
   @Input() set planets(data: Planets[] | null) {
     if (data) {
       this._planets = data;
-      // this.planetsLoop = data;
     }
   }
   @Input() set vehicle(data: Vehicle[] | null) {
@@ -32,8 +47,18 @@ export class ResultPageComponent implements OnInit {
       this.resultService.vehicleObservable.next([...this._vehicles]);
     }
   }
-  constructor(private resultService: ResultsService) {}
-  ngOnInit(): void {}
+  constructor(
+    private resultService: ResultsService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
+  ngOnInit(): void {
+    console.log('1');
+  }
+  ngAfterViewInit(): void {
+    this.isMobileScreen =
+      this.mainDiv!.nativeElement.clientWidth <= 400 ? true : false;
+    this.changeDetector.detectChanges(); //overkill and expensive but better than settimeout!!
+  }
 
   selectedFromList(indexObj: any) {
     if (!this.disabledBooleanArray.length) {
