@@ -1,6 +1,13 @@
+:host {
+    width: 100%;
+    display: block;
+}
+
 .container {
+
     display: flex;
     flex-direction: column;
+    width: 100%;
     flex-wrap: wrap;
 
     .item-center {
@@ -9,7 +16,9 @@
 
     .header {}
 
-    .results-page {}
+    .results-page {
+        width: 100%;
+    }
 
     .footer {}
 

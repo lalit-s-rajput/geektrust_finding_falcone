@@ -1,22 +1,42 @@
-<div class="result-container">
-    <div class="first-selector child">
-        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
-            (selected)="selectedFromList($event)"
-            (selectedVehicle)="selectedVehicle($event)"></app-single-dropdown-view>
-    </div>
-    <div class="first-selector child">
-        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
-            (selected)="selectedFromList($event)"
-            (selectedVehicle)="selectedVehicle($event)"></app-single-dropdown-view>
-    </div>
-    <div class="first-selector child">
-        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
-            (selected)="selectedFromList($event)"
-            (selectedVehicle)="selectedVehicle($event)"></app-single-dropdown-view>
-    </div>
-    <div class="first-selector child">
-        <app-single-dropdown-view [planets]="_planets" [vehicle]="_vehicles" [disabledOption]="_disabledBooleanArray"
-            (selected)="selectedFromList($event)"
-            (selectedVehicle)="selectedVehicle($event)"></app-single-dropdown-view>
-    </div>
+<div
+  #mainDiv
+  [ngClass]="isMobileScreen ? 'isMobileScreen' : 'isDesktop'"
+  class="result-container"
+>
+  <div class="first-selector child">
+    <app-single-dropdown-view
+      [planets]="_planets"
+      [vehicle]="_vehicles"
+      [disabledOption]="_disabledBooleanArray"
+      (selected)="selectedFromList($event)"
+      (selectedVehicle)="selectedVehicle($event)"
+    ></app-single-dropdown-view>
+  </div>
+  <div class="first-selector child">
+    <app-single-dropdown-view
+      [planets]="_planets"
+      [vehicle]="_vehicles"
+      [disabledOption]="_disabledBooleanArray"
+      (selected)="selectedFromList($event)"
+      (selectedVehicle)="selectedVehicle($event)"
+    ></app-single-dropdown-view>
+  </div>
+  <div class="first-selector child">
+    <app-single-dropdown-view
+      [planets]="_planets"
+      [vehicle]="_vehicles"
+      [disabledOption]="_disabledBooleanArray"
+      (selected)="selectedFromList($event)"
+      (selectedVehicle)="selectedVehicle($event)"
+    ></app-single-dropdown-view>
+  </div>
+  <div class="first-selector child">
+    <app-single-dropdown-view
+      [planets]="_planets"
+      [vehicle]="_vehicles"
+      [disabledOption]="_disabledBooleanArray"
+      (selected)="selectedFromList($event)"
+      (selectedVehicle)="selectedVehicle($event)"
+    ></app-single-dropdown-view>
+  </div>
 </div>
