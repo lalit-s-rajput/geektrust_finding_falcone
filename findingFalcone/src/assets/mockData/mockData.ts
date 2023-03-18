@@ -13,4 +13,19 @@ export const mockData = {
     { name: 'Space shuttle', total_no: 1, max_distance: 400, speed: 5 },
     { name: 'Space ship', total_no: 2, max_distance: 600, speed: 10 },
   ],
+  finalData: {
+    token: 'test-token',
+    planet_names: ['Donlon', 'Enchai', 'Jebing', 'Sapir'],
+    vehicle_names: ['Space pod', 'Space pod', 'Space shuttle', 'Space ship'],
+  },
+  successResponse: {
+    planet_name: 'Jebing',
+    status: 'success',
+  },
+  failureResponse: {
+    status: false,
+  },
+  errorResponse: {
+    error: Error('test error'),
+  },
 };

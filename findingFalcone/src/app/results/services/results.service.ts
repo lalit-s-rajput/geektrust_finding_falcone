@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, catchError, mergeMap, of, throwError } from 'rxjs';
 import { finalState, Planets, Vehicle } from 'src/app/core/interface/interface';
 @Injectable({
   providedIn: 'root',
@@ -54,6 +54,10 @@ export class ResultsService {
         return this.httpService.post(this.FIND_FALCON, this.State, {
           headers,
         });
+      }),
+      catchError((e: any) => {
+        //do your processing here
+        return throwError(() => new Error('error in response'));
       })
     );
   }
