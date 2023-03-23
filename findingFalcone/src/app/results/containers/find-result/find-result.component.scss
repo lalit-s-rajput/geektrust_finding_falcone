@@ -1,0 +1,25 @@
+.find-result-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px;
+
+    button {
+        border: 1px solid black;
+        background: green;
+        color: white;
+        width: 150px;
+        height: 50px;
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .body {
+        margin: 20px;
+    }
+
+    .body>div {
+        margin: 10px;
+    }
+}
