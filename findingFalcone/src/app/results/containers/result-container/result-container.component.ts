@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { ResultsService } from '../../services/results.service';
 
 @Component({
@@ -24,23 +25,18 @@ export class ResultContainerComponent implements OnInit {
       this.isDisabled = data;
     });
   }
-  buttonStatus() {
-    return this.service.isFindDisabled;
-  }
 
   findFalcon() {
-    this.service.findFalcon().subscribe(
-      (data: any) => {
-        //(res:any)=>{}
-        console.log(data);
+    this.service.findFalcon().subscribe({
+      next: (data: any) => {
         if (data?.status) {
           this.service.finalData.next({ ...data });
           this.routeService.navigate(['find']);
         }
       },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+      error: (e: any) => {
+        console.error(e);
+      },
+    });
   }
 }

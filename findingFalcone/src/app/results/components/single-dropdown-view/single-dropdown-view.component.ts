@@ -25,7 +25,7 @@ export class SingleDropdownViewComponent implements OnInit {
   prevSelectedDestination: any = '';
   firstDestination: any = '';
   prevSelectedVehicle: any = null;
-  selectedIndex = undefined;
+  selectedIndex: number | undefined = undefined;
   _vehicles: Vehicle[] = [];
   finalData = [];
   selectedDestinations = [];
@@ -119,10 +119,6 @@ export class SingleDropdownViewComponent implements OnInit {
     this.firstDestination = item;
     this.planetsLoop = [];
     this.isDropFieldOpen = false;
-    // this.service.removeFromFinalData(
-    //   this.prevSelectedVehicle ? this.prevSelectedVehicle.currentItem.name : null,
-    //   this.prevSelectedDestination ? this.prevSelectedDestination : null
-    // );
   }
   openDropdownField() {
     this.planetsLoop = this._planets;
@@ -159,8 +155,5 @@ export class SingleDropdownViewComponent implements OnInit {
       this.isFirstTime
     );
     this.isFirstTime = false;
-    //console.log(this.isFirstTime);
   }
-
-  addToFinalData() {}
 }

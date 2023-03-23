@@ -70,8 +70,6 @@ export class ResultPageComponent implements OnInit, AfterViewInit {
     this._disabledBooleanArray = this.disabledBooleanArray;
   }
 
-  findFalcon() {}
-
   selectedVehicle(item: Vehicle) {
     this.resultService.modifyVehicleObservable(item);
   }
