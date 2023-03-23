@@ -1,15 +1,21 @@
 <div class="container">
-    <div class="header item-center">
-        <h1>Finding Falcone!</h1>
-        <h2>Select planets you want to search in: </h2>
+  <div class="header item-center">
+    <h1>Finding Falcone!</h1>
+    <h2>Select planets you want to search in:</h2>
+  </div>
+  <div class="results-page item-center">
+    <app-result-page
+      [planets]="planetsData$ | async"
+      [vehicle]="vehicleData$ | async"
+    ></app-result-page>
+  </div>
+  <div class="footer item-center">
+    <div>
+      <h1>Time Taken: {{ time }}</h1>
     </div>
-    <div class="results-page item-center">
-        <app-result-page [planets]="planetsData$ | async" [vehicle]="vehicleData$ | async"></app-result-page>
-    </div>
-    <div class="footer item-center">
-        <div>
-            <h1>Time Taken: {{time}}</h1>
-        </div>
-        <button (click)="findFalcon()" [disabled]="isDisabled" class="find">Find Falcone</button>
-    </div>
+    <button (click)="findFalcon()" [disabled]="isDisabled" class="find">
+      Find Falcone
+    </button>
+  </div>
 </div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
