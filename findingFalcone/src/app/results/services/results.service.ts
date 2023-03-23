@@ -6,7 +6,7 @@ import { finalState, Planets, Vehicle } from 'src/app/core/interface/interface';
   providedIn: 'root',
 })
 export class ResultsService {
-  private State: finalState = {
+  State: finalState = {
     token: '',
     planet_names: [],
     vehicle_names: [],
@@ -55,10 +55,7 @@ export class ResultsService {
           headers,
         });
       }),
-      catchError((e: any) => {
-        //do your processing here
-        return throwError(() => new Error('error in response'));
-      })
+      catchError(async () => new Error('error in response'))
     );
   }
 
@@ -83,8 +80,6 @@ export class ResultsService {
       JSON.parse(JSON.stringify([...this.vehicleInitialData]))
     );
   }
-
-  resetPlanetData() {}
 
   addToFinalData(
     Vehicle: { current: any; prev: any },
@@ -174,6 +169,5 @@ export class ResultsService {
     this.State.planet_names = [];
     this.State.vehicle_names = [];
     this.resetVehicleData();
-    this.resetPlanetData();
   }
 }

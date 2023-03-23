@@ -18,6 +18,11 @@ export const mockData = {
     planet_names: ['Donlon', 'Enchai', 'Jebing', 'Sapir'],
     vehicle_names: ['Space pod', 'Space pod', 'Space shuttle', 'Space ship'],
   },
+  resetData: {
+    token: '',
+    planet_names: [],
+    vehicle_names: [],
+  },
   successResponse: {
     planet_name: 'Jebing',
     status: 'success',

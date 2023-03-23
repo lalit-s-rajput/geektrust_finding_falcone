@@ -13,8 +13,7 @@ export class FindResultComponent implements OnInit {
   isFound = false;
   constructor(
     private routerService: Router,
-    private resultService: ResultsService,
-    private route: ActivatedRoute
+    private resultService: ResultsService
   ) {}
   ngOnInit(): void {
     this.resultService.finalData.subscribe((data: any) => {
@@ -26,8 +25,6 @@ export class FindResultComponent implements OnInit {
         this.isFound = false;
       }
     });
-    //this.planet_name = this.route.snapshot.paramMap.get('planetName');
-    //this.timeTaken = this.route.snapshot.paramMap.get('time');
   }
   startAgain() {
     this.routerService.navigate(['']);

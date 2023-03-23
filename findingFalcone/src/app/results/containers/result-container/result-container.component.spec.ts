@@ -9,6 +9,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Planets, Vehicle } from 'src/app/core/interface/interface';
 import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 describe('ResultContainerComponent', () => {
   let component: ResultContainerComponent;
   let fixture: ComponentFixture<ResultContainerComponent>;
@@ -25,12 +26,6 @@ describe('ResultContainerComponent', () => {
     'resetData',
     'isFindDisabled',
   ]);
-  let planetData = resultServiceStub.getPlanets.and.returnValue(
-    of(mockData.Planets)
-  );
-  let vehicleData = resultServiceStub.getVehicles.and.returnValue(
-    of(mockData.vehicle)
-  );
   /**
    * mocking observables
    */
@@ -41,7 +36,7 @@ describe('ResultContainerComponent', () => {
   resultServiceStub.finalData = new BehaviorSubject<{}>({});
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, FormsModule],
       declarations: [ResultContainerComponent, ResultPageComponent],
       providers: [{ provide: ResultsService, useValue: resultServiceStub }],
       schemas: [NO_ERRORS_SCHEMA],
